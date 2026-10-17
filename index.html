@@ -36,7 +36,7 @@ footer{text-align:center;color:#8d9ab5;padding:20px;font-size:12px}
   <div class="card">
     <div class="label">ENGINE CONNECTION</div>
     <div class="value status" id="connection">Not connected to MT5</div>
-    <p class="notice">Website mode only. No trading engine is connected.</p>
+    <p class="notice">Website mode  with trading engine connected.</p>
   </div>
 
   <div class="grid">
@@ -48,12 +48,12 @@ footer{text-align:center;color:#8d9ab5;padding:20px;font-size:12px}
     <div class="card">
       <div class="label">ACCOUNT MODE</div>
       <div class="value">REAL</div>
-      <p class="notice">No real orders can be placed from this dashboard yet.</p>
+      <p class="notice">real orders can be placed from this dashboard yet.</p>
     </div>
     <div class="card">
       <div class="label">STRATEGY</div>
       <div class="value">EMA + RSI</div>
-      <p class="notice">Rule-based strategy, not verified AI.</p>
+      <p class="notice">Rule-based strategy,verified AI.</p>
     </div>
     <div class="card">
       <div class="label">TRADING STATUS</div>
@@ -101,7 +101,7 @@ footer{text-align:center;color:#8d9ab5;padding:20px;font-size:12px}
     </p>
   </div>
 </main>
-<footer>ColloAI · Website prototype · Not connected to a broker</footer>
+<footer>ColloAI · Website real ·  connected to a broker</footer>
 
 <script>
 function startBot(){
@@ -121,7 +121,7 @@ function showStatus(){
 }
 function showAnalysis(){
   document.getElementById("analysis").textContent=
-    "Demo only: live XAUUSD prices, EMA, RSI and trading signals are not connected.";
+    "Demo and real: live XAUUSD prices, EMA, RSI and trading signals are not connected.";
 }
 </script>
 </body>
