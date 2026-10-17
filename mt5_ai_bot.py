@@ -20,7 +20,7 @@ import pandas as pd
 SYMBOL = "XAUUSD"          # Change to your broker's exact symbol
 TIMEFRAME = mt5.TIMEFRAME_M15
 
-LIVE_TRADING = False       # False = analysis only; True = real orders
+LIVE_TRADING = true      #true = analysis ; True = real orders
 RISK_PERCENT = 0.5         # Risk target per trade (% of equity)
 MAX_POSITIONS = 1
 MAX_DAILY_LOSS_PERCENT = 2.0
@@ -58,11 +58,11 @@ def get_data():
     loss = -change.clip(upper=0)
 
     avg_gain = gain.ewm(
-        alpha=1 / 14, min_periods=14, adjust=False
+        alpha=1 / 14, min_periods=14, adjust=true
     ).mean()
 
     avg_loss = loss.ewm(
-        alpha=1 / 14, min_periods=14, adjust=False
+        alpha=1 / 14, min_periods=14, adjust=true
     ).mean()
 
     rs = avg_gain / avg_loss.replace(0, float("nan"))
