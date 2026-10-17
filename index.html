@@ -4,126 +4,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ColloAI Gold Bot</title>
+<meta name="theme-color" content="#0b1020">
+<title>ColloAI | Gold Trading Bot</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}
-header{padding:22px 18px;background:#121a2e;border-bottom:1px solid #29344c}
-h1{margin:0;font-size:25px;color:#f3c969}
-header p{color:#aab5ce;margin-bottom:0}
-main{max-width:850px;margin:auto;padding:18px}
-.card{background:#141e33;border:1px solid #293651;border-radius:14px;padding:18px;margin-bottom:15px}
-.label{color:#aab5ce;font-size:13px}
-.value{font-size:23px;font-weight:bold;margin-top:9px}
-.status{color:#f3c969;font-weight:bold}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-button{padding:14px;border:0;border-radius:9px;font-weight:bold;font-size:15px;width:100%;margin-top:10px}
-.start{background:#25865b;color:white}
-.stop{background:#a83c4b;color:white}
-.secondary{background:#283550;color:white}
-input{width:100%;padding:12px;background:#0b1020;color:white;border:1px solid #3a4865;border-radius:8px;margin-top:7px}
-.notice{font-size:13px;line-height:1.6;color:#b7c4df}
-footer{text-align:center;color:#8d9ab5;padding:20px;font-size:12px}
-@media(max-width:450px){.grid{grid-template-columns:1fr}}
+body{margin:0;background:#0b1020;color:#f4f6fc;font-family:Arial,sans-serif}
+header{padding:22px 20px;border-bottom:1px solid #293651}
+.brand{font-size:25px;font-weight:800}
+.brand span{color:#f2c766}
+main{max-width:650px;margin:auto;padding:22px 18px}
+.hero{padding:48px 10px 30px;text-align:center}
+.tag{color:#f2c766;font-size:12px;letter-spacing:2px;font-weight:bold}
+h1{font-size:38px;line-height:1.15;margin:18px 0}
+p{color:#aebbd3;line-height:1.7}
+.btn{display:block;width:100%;padding:16px;border-radius:10px;
+background:#f2c766;color:#101727;text-decoration:none;
+text-align:center;font-weight:bold;font-size:16px;margin-top:24px}
+.card{padding:20px;background:#141e33;border:1px solid #293651;
+border-radius:15px;margin-top:18px}
+.small{font-size:13px}
+footer{text-align:center;padding:25px;color:#8290aa;font-size:12px}
 </style>
 </head>
 <body>
 <header>
-  <h1>ColloAI <span style="color:white">GOLD BOT</span></h1>
-  <p>Gold trading dashboard · XAUUSD</p>
+  <div class="brand"><span>ColloAI</span> GOLD BOT</div>
 </header>
+
 <main>
-  <div class="card">
-    <div class="label">ENGINE CONNECTION</div>
-    <div class="value status" id="connection">Not connected to MT5</div>
-    <p class="notice">Website mode  with trading engine connected.</p>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="label">GOLD SYMBOL</div>
-      <div class="value">XAUUSD</div>
-      <p class="notice">Broker symbol must be verified.</p>
-    </div>
-    <div class="card">
-      <div class="label">ACCOUNT MODE</div>
-      <div class="value">REAL</div>
-      <p class="notice">real orders can be placed from this dashboard yet.</p>
-    </div>
-    <div class="card">
-      <div class="label">STRATEGY</div>
-      <div class="value">EMA + RSI</div>
-      <p class="notice">Rule-based strategy,verified AI.</p>
-    </div>
-    <div class="card">
-      <div class="label">TRADING STATUS</div>
-      <div class="value" id="botStatus">STOPPED</div>
-      <p class="notice">Interface status only.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>Risk settings</h3>
-    <label for="risk">Risk per trade (%)</label>
-    <input id="risk" type="number" min="0.1" max="0.5"
-           step="0.1" value="0.25">
-    <label for="dailyLoss">Daily loss limit (%)</label>
-    <input id="dailyLoss" type="number" min="0.5" max="1"
-           step="0.1" value="1">
-    <p class="notice">These are display settings only; they do not control your MT5 account.</p>
-  </div>
-
-  <div class="card">
-    <h3>Bot controls</h3>
-    <button class="start" onclick="<a href="./dashboard.html">OPEN DASHBOARD</a>
-    <button class="stop" onclick="stopBot()">STOP DASHBOARD</button>
-    <button class="secondary" onclick="showStatus()">CHECK CONNECTION</button>
-    <p id="message" class="notice" aria-live="polite">
-      Waiting. The trading engine is not connected.
+  <section class="hero">
+    <div class="tag">AUTOMATED TRADING PLATFORM</div>
+    <h1>Trade Gold with<br><span style="color:#f2c766">ColloAI</span></h1>
+    <p>
+      Your central workspace for Gold market analysis,
+      trading-engine connection and risk management.
     </p>
-  </div>
+    <a class="btn" href="./dashboard.html">OPEN DASHBOARD →</a>
+    <p class="small">XAUUSD · MetaTrader 5 integration planned</p>
+  </section>
 
-  <div class="card">
-    <h3>Market analysis</h3>
-    <p id="analysis">No live market feed connected.</p>
-    <button class="secondary" onclick="showAnalysis()">VIEW DEMO ANALYSIS</button>
-    <p class="notice">Demo text is illustrative, not a live signal or financial advice.</p>
-  </div>
+  <section class="card">
+    <h3>Gold trading workspace</h3>
+    <p>Access your engine status, trading settings and account connection page from the dashboard.</p>
+  </section>
 
-  <div class="card">
-    <h3>Before live trading</h3>
-    <p class="notice">
-      1. Connect a secure trading backend.<br>
-      2. Connect MT5 desktop on a compatible Windows machine.<br>
-      3. Verify broker symbol, prices, margin and order execution.<br>
-      4. Add authentication and secure Start/Stop controls.<br><br>
-      Never put your MT5 password or secret API keys in this webpage.
+  <section class="card">
+    <h3>Security first</h3>
+    <p class="small">
+      Account credentials must be handled through a secure backend.
+      This website alone does not connect to MT5 or execute trades.
     </p>
-  </div>
+  </section>
 </main>
-<footer>ColloAI · Website real ·  connected to a broker</footer>
 
-<script>
-function startBot(){
-  document.getElementById("botStatus").textContent="DASHBOARD ACTIVE";
-  document.getElementById("message").textContent=
-    "Dashboard preview started only. No trades are being executed.";
-}
-function stopBot(){
-  document.getElementById("botStatus").textContent="STOPPED";
-  document.getElementById("message").textContent=
-    "Dashboard preview stopped. No MT5 orders were sent.";
-}
-function showStatus(){
-  document.getElementById("connection").textContent="Not connected to MT5";
-  document.getElementById("message").textContent=
-    "No trading backend is configured.";
-}
-function showAnalysis(){
-  document.getElementById("analysis").textContent=
-    "Demo and real: live XAUUSD prices, EMA, RSI and trading signals are not connected.";
-}
-</script>
+<footer>ColloAI · Gold Trading Platform</footer>
 </body>
 </html>
+
 
