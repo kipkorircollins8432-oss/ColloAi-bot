@@ -3,54 +3,117 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ColloAI Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>ColloAI | Bot Dashboard</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}
-header{padding:22px;background:#141e33;border-bottom:1px solid #293651}
-h1{margin:0;color:#f3c969}
-main{max-width:800px;margin:auto;padding:16px}
-.card{padding:18px;background:#141e33;border:1px solid #293651;border-radius:14px;margin-bottom:15px}
-.label{font-size:13px;color:#aab5ce}
-.value{font-size:23px;font-weight:bold;margin-top:9px}
-p{line-height:1.5;color:#b7c4df}
-button,a{display:block;width:100%;padding:14px;margin-top:12px;border:0;border-radius:9px;text-align:center;font-weight:bold;text-decoration:none;font-size:15px}
-button{background:#a83c4b;color:white}
-a{background:#283550;color:white}
-.gold{color:#f3c969}
+body{margin:0;background:#0b1020;color:#f4f6fc;font-family:Arial,sans-serif}
+header{padding:20px;background:#141e33;border-bottom:1px solid #293651}
+h1{font-size:23px;margin:0;color:#f2c766}
+main{max-width:650px;margin:auto;padding:16px}
+.card{background:#141e33;border:1px solid #293651;border-radius:14px;padding:19px;margin-bottom:15px}
+.label{font-size:12px;color:#aebbd3;letter-spacing:1px}
+.status{font-size:21px;font-weight:bold;margin-top:10px;color:#f2c766}
+p{color:#aebbd3;line-height:1.6}
+label{display:block;font-size:14px;margin-top:15px}
+input,select{display:block;width:100%;padding:13px;margin-top:7px;
+border-radius:8px;border:1px solid #35445f;background:#0b1020;color:white;font-size:15px}
+button,.link{display:block;width:100%;padding:14px;margin-top:15px;
+border:0;border-radius:9px;text-align:center;text-decoration:none;
+font-size:15px;font-weight:bold;background:#f2c766;color:#101727}
+.secondary{background:#283550;color:white}
+.note{font-size:12px}
 </style>
 </head>
 <body>
 <header>
-<h1>ColloAI GOLD BOT</h1>
-<p>Trading dashboard · XAUUSD</p>
+  <h1>ColloAI BOT ENGINE</h1>
+  <p>Gold trading · XAUUSD · MT5</p>
 </header>
+
 <main>
-<div class="card">
-<div class="label">MT5 CONNECTION</div>
-<div class="value gold">Not connected</div>
-<p>The trading engine has not been connected yet.</p>
-</div>
-<div class="card">
-<div class="label">GOLD SYMBOL</div>
-<div class="value">XAUUSD</div>
-<p>Gold market monitoring.</p>
-</div>
-<div class="card">
-<div class="label">BOT STATUS</div>
-<div class="value" id="status">STOPPED</div>
-<p>These controls are a website preview; they do not place trades.</p>
-<button onclick="document.getElementById('status').textContent='PREVIEW ACTIVE';document.getElementById('message').textContent='Preview started. No trades are being placed.'">START PREVIEW</button>
-<button onclick="document.getElementById('status').textContent='STOPPED';document.getElementById('message').textContent='Preview stopped.'">STOP PREVIEW</button>
-<p id="message">Ready.</p>
-</div>
-<div class="card">
-<div class="label">STRATEGY</div>
-<div class="value">EMA + RSI</div>
-<p>Rule-based strategy. No live market data is connected.</p>
-</div>
-<a href="./index.html">← Back to Home</a>
+  <section class="card">
+    <div class="label">ENGINE CONNECTION</div>
+    <div class="status" id="engineStatus">NOT CONNECTED</div>
+    <p id="message">No trading backend is configured.</p>
+  </section>
+
+  <section class="card">
+    <h3>Connect broker account</h3>
+    <p>Enter account details only after a secure backend is available.</p>
+
+    <form id="accountForm">
+      <label for="broker">Broker</label>
+      <select id="broker" required>
+        <option value="">Choose your broker</option>
+        <option>Exness</option>
+        <option>FXPesa</option>
+        <option>IC Markets</option>
+        <option>Deriv</option>
+        <option>Other</option>
+      </select>
+
+      <label for="login">MT5 account number</label>
+      <input id="login" inputmode="numeric" autocomplete="off"
+        placeholder="Account login number" required>
+
+      <label for="server">MT5 server name</label>
+      <input id="server" autocomplete="off"
+        placeholder="Exact server shown in MT5" required>
+
+      <label for="symbol">Gold symbol at your broker</label>
+      <input id="symbol" value="XAUUSD" required>
+
+      <p class="note">
+        This form is not connected to a backend and does not submit or save
+        your details. Do not enter your password here.
+      </p>
+      <button type="button" id="connectButton">CHECK CONNECTION</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h3>Bot configuration</h3>
+    <div class="label">MARKET</div>
+    <p>Gold (XAUUSD)</p>
+
+    <div class="label">STRATEGY</div>
+    <p>EMA + RSI · Rule-based, not verified AI</p>
+
+    <div class="label">EXECUTION</div>
+    <p>Disabled until a real MT5 backend is connected.</p>
+
+    <button type="button" class="secondary" id="startButton">
+      START BOT
+    </button>
+    <button type="button" class="secondary" id="stopButton">
+      STOP BOT
+    </button>
+    <p id="botMessage" class="note" aria-live="polite">
+      Bot is stopped. No orders have been sent.
+    </p>
+  </section>
+
+  <a class="link" href="./index.html">← BACK TO HOME</a>
 </main>
+
+<script>
+document.getElementById("connectButton").addEventListener("click",()=>{
+  document.getElementById("engineStatus").textContent="NOT CONNECTED";
+  document.getElementById("message").textContent=
+    "Connection unavailable: a secure MT5 backend has not been installed.";
+});
+
+document.getElementById("startButton").addEventListener("click",()=>{
+  document.getElementById("botMessage").textContent=
+    "Cannot start trading: no MT5 engine is connected. No order was placed.";
+});
+
+document.getElementById("stopButton").addEventListener("click",()=>{
+  document.getElementById("botMessage").textContent=
+    "Dashboard reports stopped. This does not stop a separate trading engine.";
+});
+</script>
 </body>
 </html>
