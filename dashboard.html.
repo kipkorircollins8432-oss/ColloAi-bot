@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ColloAI Dashboard</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#141e33;border-bottom:1px solid #293651}
+h1{margin:0;color:#f3c969}
+main{max-width:800px;margin:auto;padding:16px}
+.card{padding:18px;background:#141e33;border:1px solid #293651;border-radius:14px;margin-bottom:15px}
+.label{font-size:13px;color:#aab5ce}
+.value{font-size:23px;font-weight:bold;margin-top:9px}
+p{line-height:1.5;color:#b7c4df}
+button,a{display:block;width:100%;padding:14px;margin-top:12px;border:0;border-radius:9px;text-align:center;font-weight:bold;text-decoration:none;font-size:15px}
+button{background:#a83c4b;color:white}
+a{background:#283550;color:white}
+.gold{color:#f3c969}
+</style>
+</head>
+<body>
+<header>
+<h1>ColloAI GOLD BOT</h1>
+<p>Trading dashboard · XAUUSD</p>
+</header>
+<main>
+<div class="card">
+<div class="label">MT5 CONNECTION</div>
+<div class="value gold">Not connected</div>
+<p>The trading engine has not been connected yet.</p>
+</div>
+<div class="card">
+<div class="label">GOLD SYMBOL</div>
+<div class="value">XAUUSD</div>
+<p>Gold market monitoring.</p>
+</div>
+<div class="card">
+<div class="label">BOT STATUS</div>
+<div class="value" id="status">STOPPED</div>
+<p>These controls are a website preview; they do not place trades.</p>
+<button onclick="document.getElementById('status').textContent='PREVIEW ACTIVE';document.getElementById('message').textContent='Preview started. No trades are being placed.'">START PREVIEW</button>
+<button onclick="document.getElementById('status').textContent='STOPPED';document.getElementById('message').textContent='Preview stopped.'">STOP PREVIEW</button>
+<p id="message">Ready.</p>
+</div>
+<div class="card">
+<div class="label">STRATEGY</div>
+<div class="value">EMA + RSI</div>
+<p>Rule-based strategy. No live market data is connected.</p>
+</div>
+<a href="./index.html">← Back to Home</a>
+</main>
+</body>
+</html>
