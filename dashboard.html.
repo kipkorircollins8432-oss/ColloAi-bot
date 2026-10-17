@@ -1,52 +1,228 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b1020">
-<title>ColloAI | Bot Dashboard</title>
+<title>ColloAI | Gold Trading Engine</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#f4f6fc;font-family:Arial,sans-serif}
-header{padding:20px;background:#141e33;border-bottom:1px solid #293651}
-h1{font-size:23px;margin:0;color:#f2c766}
-main{max-width:650px;margin:auto;padding:16px}
-.card{background:#141e33;border:1px solid #293651;border-radius:14px;padding:19px;margin-bottom:15px}
-.label{font-size:12px;color:#aebbd3;letter-spacing:1px}
-.status{font-size:21px;font-weight:bold;margin-top:10px;color:#f2c766}
-p{color:#aebbd3;line-height:1.6}
-label{display:block;font-size:14px;margin-top:15px}
-input,select{display:block;width:100%;padding:13px;margin-top:7px;
-border-radius:8px;border:1px solid #35445f;background:#0b1020;color:white;font-size:15px}
-button,.link{display:block;width:100%;padding:14px;margin-top:15px;
-border:0;border-radius:9px;text-align:center;text-decoration:none;
-font-size:15px;font-weight:bold;background:#f2c766;color:#101727}
-.secondary{background:#283550;color:white}
-.note{font-size:12px}
+:root {
+  --bg:#0b1020; --panel:#141e33; --border:#293954;
+  --text:#edf2ff; --muted:#aab8d1; --gold:#f3c969;
+  --green:#42d49a; --red:#ff6879; --blue:#7faaff;
+}
+* { box-sizing:border-box }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+header {
+  padding:18px; background:var(--panel);
+  border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between;
+  align-items:center; gap:12px; flex-wrap:wrap;
+}
+.brand { font-size:22px; font-weight:800 }
+.brand span { color:var(--gold) }
+.pill {
+  font-size:12px; border:1px solid var(--border);
+  padding:8px 10px; border-radius:20px; color:var(--muted);
+}
+nav {
+  display:flex; gap:8px; padding:12px 16px;
+  overflow-x:auto; border-bottom:1px solid var(--border);
+}
+nav a {
+  color:var(--muted); text-decoration:none; white-space:nowrap;
+  background:var(--panel); padding:10px 13px; border-radius:8px;
+}
+nav a:hover { color:var(--gold) }
+main { max-width:1100px; margin:auto; padding:18px }
+h1 { font-size:27px; margin:0 0 8px }
+h2 { font-size:18px; margin:0 0 16px }
+h3 { font-size:15px; margin:0 0 12px }
+p { color:var(--muted); line-height:1.55 }
+.small { font-size:12px }
+.muted { color:var(--muted) }
+.gold { color:var(--gold) }
+.green { color:var(--green) }
+.red { color:var(--red) }
+.grid {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px; margin:18px 0;
+}
+.two {
+  display:grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr);
+  gap:14px;
+}
+.card {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:14px; padding:17px; margin-bottom:14px;
+  min-width:0;
+}
+.metric-label { color:var(--muted); font-size:12px }
+.metric-value { font-size:22px; font-weight:800; margin-top:10px }
+.status { color:var(--gold); font-weight:bold }
+.chart-wrap { height:390px; width:100%; overflow:hidden }
+.chart-wrap iframe { width:100%; height:100%; border:0 }
+label { display:block; color:var(--muted); font-size:13px; margin-top:13px }
+input,select {
+  display:block; width:100%; padding:12px; margin-top:7px;
+  color:var(--text); background:var(--bg);
+  border:1px solid #394a68; border-radius:8px; font-size:14px;
+}
+button,.button {
+  display:block; width:100%; padding:13px; border:0;
+  border-radius:9px; font-size:14px; font-weight:bold;
+  text-align:center; text-decoration:none; cursor:pointer;
+  margin-top:10px; background:var(--gold); color:#101727;
+}
+.secondary { background:#283750; color:var(--text) }
+.danger { background:#6e2937; color:white }
+.notice {
+  border-left:3px solid var(--gold); padding:10px 12px;
+  background:#1a263d; color:#c5d0e4; font-size:12px; line-height:1.6;
+}
+.status-row {
+  display:flex; justify-content:space-between; gap:12px;
+  padding:11px 0; border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+.status-row:last-child { border-bottom:0 }
+footer { text-align:center; padding:25px; color:#8190aa; font-size:12px }
+@media(max-width:760px) {
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .two { grid-template-columns:1fr }
+  .chart-wrap { height:340px }
+}
+@media(max-width:380px) {
+  main { padding:12px }
+  .metric-value { font-size:19px }
+}
 </style>
 </head>
+
 <body>
 <header>
-  <h1>ColloAI BOT ENGINE</h1>
-  <p>Gold trading · XAUUSD · MT5</p>
+  <div class="brand"><span>ColloAI</span> GOLD ENGINE</div>
+  <div class="pill">MT5 BACKEND: NOT CONNECTED</div>
 </header>
 
-<main>
-  <section class="card">
-    <div class="label">ENGINE CONNECTION</div>
-    <div class="status" id="engineStatus">NOT CONNECTED</div>
-    <p id="message">No trading backend is configured.</p>
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#market">Gold Chart</a>
+  <a href="#analysis">AI Analysis</a>
+  <a href="#engine">Engine</a>
+  <a href="#account">Account</a>
+  <a href="#risk">Risk Settings</a>
+</nav>
+
+<main id="overview">
+  <h1>Trading Dashboard</h1>
+  <p>Gold market workspace · XAUUSD · MetaTrader 5</p>
+
+  <div class="notice">
+    <strong>Connection status:</strong> This page is not connected to your
+    MT5 account. The chart below is provided by TradingView. Its displayed
+    price may differ from your broker's executable price. No trades are
+    placed by this dashboard.
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="metric-label">TRADING ENGINE</div>
+      <div class="metric-value gold" id="engineMetric">OFFLINE</div>
+      <p class="small">Backend not connected</p>
+    </section>
+    <section class="card">
+      <div class="metric-label">MARKET</div>
+      <div class="metric-value">XAUUSD</div>
+      <p class="small">Gold / US Dollar</p>
+    </section>
+    <section class="card">
+      <div class="metric-label">ACCOUNT</div>
+      <div class="metric-value">UNKNOWN</div>
+      <p class="small">Account not connected</p>
+    </section>
+    <section class="card">
+      <div class="metric-label">OPEN BOT TRADES</div>
+      <div class="metric-value">—</div>
+      <p class="small">No live position data</p>
+    </section>
+  </div>
+
+  <div class="two">
+    <section class="card" id="market">
+      <h2>Gold Market Chart</h2>
+      <p class="small">TradingView market chart · OANDA:XAUUSD</p>
+      <div class="chart-wrap">
+        <iframe
+          title="Gold market chart from TradingView"
+          src="https://s.tradingview.com/widgetembed/?frameElementId=colloai_gold_chart&symbol=OANDA%3AXAUUSD&interval=15&hidesidetoolbar=1&symboledit=1&saveimage=0&toolbarbg=%23141e33&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&studies=%5B%22MASimple%40tv-basicstudies%22%5D"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="small">External chart. It is not a feed from your MT5 broker.</p>
+    </section>
+
+    <section class="card" id="analysis">
+      <h2>AI Market Analysis</h2>
+      <div class="status" id="aiStatus">AI SERVICE NOT CONNECTED</div>
+      <p id="aiText">
+        No AI provider or live broker data is connected. No buy or sell
+        recommendation has been generated.
+      </p>
+      <button class="secondary" id="analysisButton" type="button">
+        CHECK ANALYSIS SERVICE
+      </button>
+      <p class="small">
+        A real AI analysis service requires a backend and a configured
+        model/API. Never expose API keys in this HTML file.
+      </p>
+    </section>
+  </div>
+
+  <section class="card" id="engine">
+    <h2>Trading Engine Controls</h2>
+    <div class="status-row">
+      <span>MT5 terminal connection</span><strong class="gold">OFFLINE</strong>
+    </div>
+    <div class="status-row">
+      <span>Market signal service</span><strong class="gold">NOT CONNECTED</strong>
+    </div>
+    <div class="status-row">
+      <span>Order execution service</span><strong class="gold">NOT CONNECTED</strong>
+    </div>
+    <div class="status-row">
+      <span>Real trading</span><strong class="red">DISABLED</strong>
+    </div>
+
+    <button id="startButton" type="button">START TRADING ENGINE</button>
+    <button id="stopButton" class="danger" type="button">STOP REQUEST</button>
+    <p id="engineMessage" class="small" aria-live="polite">
+      The engine cannot start because no backend is connected.
+    </p>
+    <p class="small">
+      These buttons report connection availability only. They do not start
+      or stop a separate process, and they cannot submit or cancel orders.
+    </p>
   </section>
 
-  <section class="card">
-    <h3>Connect broker account</h3>
-    <p>Enter account details only after a secure backend is available.</p>
+  <section class="card" id="account">
+    <h2>MT5 Account Connection</h2>
+    <p>
+      Enter non-secret details to prepare the connection configuration.
+      This form does not send them anywhere.
+    </p>
 
     <form id="accountForm">
       <label for="broker">Broker</label>
       <select id="broker" required>
-        <option value="">Choose your broker</option>
+        <option value="">Choose broker</option>
         <option>Exness</option>
         <option>FXPesa</option>
         <option>IC Markets</option>
@@ -56,63 +232,116 @@ font-size:15px;font-weight:bold;background:#f2c766;color:#101727}
 
       <label for="login">MT5 account number</label>
       <input id="login" inputmode="numeric" autocomplete="off"
-        placeholder="Account login number" required>
+        placeholder="Account number" required>
 
-      <label for="server">MT5 server name</label>
+      <label for="server">Exact MT5 server name</label>
       <input id="server" autocomplete="off"
-        placeholder="Exact server shown in MT5" required>
+        placeholder="Find it in your MT5 account details" required>
 
       <label for="symbol">Gold symbol at your broker</label>
       <input id="symbol" value="XAUUSD" required>
 
-      <p class="note">
-        This form is not connected to a backend and does not submit or save
-        your details. Do not enter your password here.
-      </p>
-      <button type="button" id="connectButton">CHECK CONNECTION</button>
+      <button type="submit">CHECK CONFIGURATION</button>
     </form>
-  </section>
 
-  <section class="card">
-    <h3>Bot configuration</h3>
-    <div class="label">MARKET</div>
-    <p>Gold (XAUUSD)</p>
-
-    <div class="label">STRATEGY</div>
-    <p>EMA + RSI · Rule-based, not verified AI</p>
-
-    <div class="label">EXECUTION</div>
-    <p>Disabled until a real MT5 backend is connected.</p>
-
-    <button type="button" class="secondary" id="startButton">
-      START BOT
-    </button>
-    <button type="button" class="secondary" id="stopButton">
-      STOP BOT
-    </button>
-    <p id="botMessage" class="note" aria-live="polite">
-      Bot is stopped. No orders have been sent.
+    <p class="notice">
+      Do not enter your trading password or investor password here.
+      This static page has no secure server and cannot authenticate with MT5.
+      The account details are not saved by this page.
+    </p>
+    <p id="accountMessage" class="small" aria-live="polite">
+      No account is connected.
     </p>
   </section>
 
-  <a class="link" href="./index.html">← BACK TO HOME</a>
+  <section class="card" id="risk">
+    <h2>Risk Management Configuration</h2>
+
+    <label for="riskPercent">Target risk per trade (%)</label>
+    <input id="riskPercent" type="number" min="0.1" max="0.5"
+      step="0.1" value="0.25">
+
+    <label for="dailyLimit">Daily loss limit (%)</label>
+    <input id="dailyLimit" type="number" min="0.5" max="1"
+      step="0.1" value="1">
+
+    <label for="positionLimit">Maximum bot positions</label>
+    <input id="positionLimit" type="number" min="1" max="3" value="2">
+
+    <button class="secondary" id="riskButton" type="button">
+      VALIDATE SETTINGS
+    </button>
+    <p id="riskMessage" class="small">
+      These settings are display-only and do not restrict live account orders.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>System Information</h2>
+    <div class="status-row">
+      <span>Dashboard</span><strong class="green">LOADED</strong>
+    </div>
+    <div class="status-row">
+      <span>Chart provider</span><strong>TradingView</strong>
+    </div>
+    <div class="status-row">
+      <span>MT5 execution</span><strong class="gold">NOT AVAILABLE HERE</strong>
+    </div>
+    <div class="status-row">
+      <span>AI engine</span><strong class="gold">NOT CONFIGURED</strong>
+    </div>
+  </section>
 </main>
 
+<footer>ColloAI · Trading interface · No broker connection established</footer>
+
 <script>
-document.getElementById("connectButton").addEventListener("click",()=>{
-  document.getElementById("engineStatus").textContent="NOT CONNECTED";
-  document.getElementById("message").textContent=
-    "Connection unavailable: a secure MT5 backend has not been installed.";
+const $ = id => document.getElementById(id);
+
+$("analysisButton").addEventListener("click", () => {
+  $("aiStatus").textContent = "AI SERVICE NOT CONNECTED";
+  $("aiText").textContent =
+    "No AI endpoint is configured. The chart is external and this page " +
+    "cannot read its price data. No live analysis or trade signal was created.";
 });
 
-document.getElementById("startButton").addEventListener("click",()=>{
-  document.getElementById("botMessage").textContent=
-    "Cannot start trading: no MT5 engine is connected. No order was placed.";
+$("startButton").addEventListener("click", () => {
+  $("engineMetric").textContent = "OFFLINE";
+  $("engineMessage").textContent =
+    "Start rejected: no authenticated trading backend is configured. " +
+    "No order was sent.";
 });
 
-document.getElementById("stopButton").addEventListener("click",()=>{
-  document.getElementById("botMessage").textContent=
-    "Dashboard reports stopped. This does not stop a separate trading engine.";
+$("stopButton").addEventListener("click", () => {
+  $("engineMessage").textContent =
+    "No backend is connected, so no remote stop command could be sent. " +
+    "Check your trading terminal separately if another bot is running.";
+});
+
+$("accountForm").addEventListener("submit", event => {
+  event.preventDefault();
+  $("accountMessage").textContent =
+    "Fields completed, but configuration is not connected or saved. " +
+    "A secure backend and MT5 terminal are required.";
+});
+
+$("riskButton").addEventListener("click", () => {
+  const risk = Number($("riskPercent").value);
+  const daily = Number($("dailyLimit").value);
+  const positions = Number($("positionLimit").value);
+
+  if (!Number.isFinite(risk) || risk < 0.1 || risk > 0.5 ||
+      !Number.isFinite(daily) || daily < 0.5 || daily > 1 ||
+      !Number.isInteger(positions) || positions < 1 || positions > 3) {
+    $("riskMessage").textContent =
+      "Invalid values. Risk must be 0.1–0.5%, daily limit 0.5–1%, " +
+      "and positions 1–3.";
+    return;
+  }
+
+  $("riskMessage").textContent =
+    "Values are within the displayed limits. They are not applied to " +
+    "MT5 because no trading backend is connected.";
 });
 </script>
 </body>
